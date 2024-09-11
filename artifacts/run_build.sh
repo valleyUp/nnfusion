@@ -41,3 +41,8 @@ make 2>&1 | tee -a build.log
 cd $root_dir
 cd "$benchmark_dir/multi-head_attention/fractaltensor/"
 make 2>&1 | tee -a build.log
+
+# build the bigbird attention benchmark
+cd $root_dir
+cd "$benchmark_dir/blocked_sparse_attention/fractaltensor"
+make 2>&1 | tee -a build.log
