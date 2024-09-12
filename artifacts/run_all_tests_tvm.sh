@@ -15,27 +15,27 @@ depths='1 2 4 8 16 32'
 hiddens='256 1024'
 for h in $hiddens; do
     for d in $depths; do
-        output_filename="$log_dir/tvm_stacked_lstm_h${h}_d${d}_.tsv"
+        output_filename=$log_dir
         python3 $rnn_bench_dir/lstm_tvm_tuned.py \
             --seq_len 64 \
-            --hidden_size h \
-            --depth d \
-            --output_file $output_filename
+            --hidden_size $h \
+            --depth $d \
+            2>&1 | tee $log_dir/tvm_stacked_lstm_h${h}_d${d}_.tsv
     done
 done
 seqs='32 64 128'
 hiddens='256 1024'
 for h in $hiddens; do
     for s in $seqs; do
-        output_filename="$log_dir/tvm_stacked_lstm_h${h}_s${s}_.tsv"
+        output_filename=$log_dir
         python3 $rnn_bench_dir/lstm_tvm_tuned.py \
-            --seq_len s \
-            --hidden_size h \
+            --seq_len $s \
+            --hidden_size $h \
             --depth 32 \
-            --output_file $output_filename
+            2>&1 | tee $log_dir/tvm_stacked_lstm_h${h}_d${d}_.tsv
     done
 done
-
+benchmark_dir="FractalTensor/benchmarks"
 # 5. run the back-2-back gemm benchmark
 b2b_gemm_dir="$benchmark_dir/fused_two_hgemms/baseline/tvm"
 
