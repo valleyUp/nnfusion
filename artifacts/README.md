@@ -111,10 +111,11 @@ Since the benchmarks reported in the paper involve running the worklos we listed
 1. Run cutlass fused multi-head attention.
 
     Before running this script, please ensure that the pre-built cutlass is located in the root directory of the codebase. If you are using the server we provided, create a symlink to link CUTLASS into the current directory.
-    
+
     ```bash
-    ln -s ~/cutlass cutlass 
-    ./run_all_tests_cutlass_mha.sh
+    ln -s ~/cutlass cutlass
+
+    ./run_cutlass_mha.sh
     ```
     The execution will take approximately 1 minutes.
 
