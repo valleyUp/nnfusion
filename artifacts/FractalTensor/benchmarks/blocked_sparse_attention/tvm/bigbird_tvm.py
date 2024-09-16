@@ -245,7 +245,7 @@ def tvm_bigbird(batch_size, hidden_size, len, block_size, window_size,
         verbose=2,
     )
 
-    # tuner.tune(tune_option)
+    tuner.tune(tune_option)
 
     funcs = []
 
