@@ -133,11 +133,11 @@ Since the benchmarks reported in the paper involve running the worklos we listed
 Once the FractalTensor is successfully built, running [run_all_tests_ft.sh](run_all_tests_ft.sh) as shown below will execute all the benchmark tests reported in the paper.
 
 ```bash
-sh run_all_tests.sh
+sh run_all_tests_ft.sh
 ```
 
 > [!NOTE]
-> *The `run_all_tests.sh` script should be executed from the root directory of the codebase.*
+> *The `run_all_tests_ft.sh` script should be executed from the root directory of the codebase.*
 
 The execution will take approximately 3 minutes. Once completed, all the benchmark logs can be found in the `logs` directory with the following structure. You can review them one by one:
 
