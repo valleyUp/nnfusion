@@ -37,3 +37,45 @@ The profiling results shown in Table 6 are based on [NVIDIA Nsight Compute (ncu)
    In the output file of the profile results, you will find the memory traffic behavior of the kernel of interest. You can then further process and analyze these results.
    
    We cannot pre-assign names due to libraries like Triton having internal implementations that call extra kernels. Filtering based on names is not feasible. To address this, we run profiling multiple times (e.g., three) to observe log outputs, then run the tested program several times (e.g., five) to identify patterns. This helps us pinpoint actual kernel calls and post-process the ncu profiling logs to compute network traffic over the memory hierarchy.
+
+### Run the test
+
+We have prepared a testing environment on the provided server to run the tests.
+
+>The following command should be executed in the `artifacts` directory of the project, instead of in the `table6` directory.
+
+1. The script [run_all_ncu_cutlass.sh](../run_all_ncu_cutlass.sh) is used to run the test for Flash Attention 2, implemented in CuTlass.
+
+  ```bash
+   sudo -i # Switch to root account
+   cd /home/sosp/nnfusion/artifacts
+   ./run_all_ncu_cutlass.sh
+   ```
+
+2. The script [run_all_ncu_flash2.sh](../run_all_ncu_pt.sh) is used to run the test for Flash Attention 2, implemented in PyTorch.
+
+   ```bash
+   sudo -i # Switch to root account
+   cd /home/sosp/nnfusion/artifacts
+   # Choose the environment you want to test
+   source /home/sosp/env/torch_env.sh
+   ./run_all_ncu_flash2.sh
+   ```
+
+3. The script [run_all_ncu_ft.sh](../run_all_ncu_ft.sh) is used to run the test for BigBird and Flash Attention, implemented in FractalTensor.
+
+   ```bash
+   sudo -i # Switch to root account
+   cd /home/sosp/nnfusion/artifacts
+   ./run_all_ncu_pt.sh
+   ```
+
+4. The script [run_all_ncu_pt.sh](../run_all_ncu_pt.sh) is used to run the test for BigBird, implemented in PyTorch.
+
+   ```bash
+   sudo -i # Switch to root account
+   cd /home/sosp/nnfusion/artifacts
+   # Choose the environment you want to test
+   source /home/sosp/env/torch_env.sh
+   ./run_all_ncu_pt.sh
+   ```
