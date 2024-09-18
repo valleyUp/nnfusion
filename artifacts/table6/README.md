@@ -52,7 +52,7 @@ We have prepared a testing environment on the provided server to run the tests.
    ./run_all_ncu_cutlass.sh
    ```
 
-2. The script [run_all_ncu_flash2.sh](../run_all_ncu_pt.sh) is used to run the test for Flash Attention 2, implemented in PyTorch.
+2. The script [run_all_ncu_flash2.sh](../run_all_ncu_flash2.sh) is used to run the test for Flash Attention 2, from the author's official implementation.
 
    ```bash
    sudo -i # Switch to root account
@@ -67,7 +67,7 @@ We have prepared a testing environment on the provided server to run the tests.
    ```bash
    sudo -i # Switch to root account
    cd /home/sosp/nnfusion/artifacts
-   ./run_all_ncu_pt.sh
+   ./run_all_ncu_ft.sh
    ```
 
 4. The script [run_all_ncu_pt.sh](../run_all_ncu_pt.sh) is used to run the test for BigBird, implemented in PyTorch.
@@ -78,4 +78,14 @@ We have prepared a testing environment on the provided server to run the tests.
    # Choose the environment you want to test
    source /home/sosp/env/torch_env.sh
    ./run_all_ncu_pt.sh
+   ```
+
+5. The script [run_all_ncu_triton.sh](../run_all_ncu_triton.sh) is used to run the test for BigBird and Flash Attention, implemented in Triton.
+
+   ```bash
+   sudo -i # Switch to root account
+   cd /home/sosp/nnfusion/artifacts
+   # Choose the environment you want to test
+   source /home/sosp/env/torch_env.sh
+   ./run_all_ncu_triton.sh
    ```
