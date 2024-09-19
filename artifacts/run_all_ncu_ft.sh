@@ -10,10 +10,12 @@ echo "NCU profiling mha benchmark"
 mha_dir="$benchmark_dir/multi-head_attention/fractaltensor/build"
 mha_exe="$mha_dir/main"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full $mha_exe > $log_dir/ft_attention_ncu.csv
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv $mha_exe > $log_dir/ft_attention_ncu.csv
 
 # 2. ncu test the bigbird benchmark
 bigbird_dir="$benchmark_dir/blocked_sparse_attention/fractaltensor/build"
 echo "NCU profiling BigBird benchmark"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full $bigbird_dir/bigbird > $log_dir/ft_bigbird_ncu.csv
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv $bigbird_dir/bigbird > $log_dir/ft_bigbird_ncu.csv

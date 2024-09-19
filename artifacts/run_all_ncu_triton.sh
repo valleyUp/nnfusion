@@ -9,12 +9,14 @@ mha_dir="$benchmark_dir/multi-head_attention/baseline"
 # 1. ncu test the mha benchmark
 echo "NCU profiling mha benchmark"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full python3 $mha_dir/test_triton_model.py > $log_dir/triton_attention_ncu.csv
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv python3 $mha_dir/test_triton_model.py > $log_dir/triton_attention_ncu.csv
 
 
 bigbird_dir="$benchmark_dir/blocked_sparse_attention/triton"
 # 2. ncu test the bigbird benchmark
 echo "NCU profiling BigBird benchmark"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full python3 $bigbird_dir/main.py \
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv python3 $bigbird_dir/main.py \
     --default_test True > $log_dir/triton_bigbird_ncu.csv

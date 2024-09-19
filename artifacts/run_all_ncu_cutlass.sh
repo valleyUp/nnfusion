@@ -17,7 +17,8 @@ fi
 # 1. ncu test the mha benchmark
 echo "NCU profiling mha benchmark"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full cutlass_attn --nheads="$nheads" \
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv cutlass_attn --nheads="$nheads" \
         --batch_size=$batch_size \
         --head_size=$head_size \
         --head_size_v=$head_size \

@@ -10,4 +10,5 @@ bigbird_dir="$benchmark_dir/blocked_sparse_attention/pytorch"
 # 2. ncu test the bigbird benchmark
 echo "NCU profiling BigBird benchmark"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full python3 $bigbird_dir/main.py > $log_dir/pt_bigbird_ncu.csv
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv python3 $bigbird_dir/main.py > $log_dir/pt_bigbird_ncu.csv

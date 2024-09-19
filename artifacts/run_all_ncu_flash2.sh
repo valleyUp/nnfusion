@@ -9,5 +9,6 @@ mha_dir="$benchmark_dir/multi-head_attention/baseline"
 # 1. ncu test the mha benchmark
 echo "NCU profiling mha benchmark"
 $ncu_dir/ncu --section "MemoryWorkloadAnalysis" \
-    --csv --set full python3 $mha_dir/test_pt_model.py > $log_dir/flash2_attention_ncu.csv
+    --metrics "dram__bytes.sum,lts__t_bytes.sum,l1tex__t_bytes.sum" \
+    --csv python3 $mha_dir/test_pt_model.py > $log_dir/flash2_attention_ncu.csv
 
