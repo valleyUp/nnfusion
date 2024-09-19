@@ -36,7 +36,9 @@ The profiling results shown in Table 6 are based on [NVIDIA Nsight Compute (ncu)
 
    In the output file of the profile results, you will find the memory traffic behavior of the kernel of interest. You can then further process and analyze these results.
    
-   We cannot pre-assign names due to libraries like Triton having internal implementations that call extra kernels. Filtering based on names is not feasible. To address this, we run profiling multiple times (e.g., three) to observe log outputs, then run the tested program several times (e.g., five) to identify patterns. This helps us pinpoint actual kernel calls and post-process the ncu profiling logs to compute network traffic over the memory hierarchy.
+   A problem is that we cannot use pre-assigned names in a general script to identify kernels we monitored since benchmarks not implemented by FractalTensor, such as Triton and PyTorch, have internal implementations that call extra kernels, and ncu will monitor them all. These kernels should not all be measure. We have to address this problem through manual observation of the logs first as following:
+   
+   During the profiling process, we know that the monitored kernel will be executed for 'warm-up' plus 'actual runs' times specified by us. Suppose this number is `N`. We then identify the names of the kernels in the log that executed `N` times. Often, these kernels are the ones we are concerned with. We then calculate the metrics for the kernels invoked after the warm-up phase, as these are the ones we need to measure.
 
 ### Run the test
 
