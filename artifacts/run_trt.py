@@ -17,16 +17,19 @@ def run_trt(prefix, use_fp16=False):
             print(parser.get_error(idx))
         raise RuntimeError()
     config = builder.create_builder_config()
-    config.set_flag(trt.BuilderFlag.STRICT_TYPES)
+    #NOTE: no such attr
+    # config.set_flag(trt.BuilderFlag.STRICT_TYPES)
     if use_fp16:
         config.set_flag(trt.BuilderFlag.FP16)
-    engine = builder.build_engine(network, config)
+    #REF: https://docs.nvidia.com/deeplearning/tensorrt/api/python_api/infer/Core/Builder.html
+    engine = builder.build_engine_with_config(network, config)
     print("Built engine successfully.")
 
     tensors = []
     for binding in engine:
-        shape = engine.get_binding_shape(binding)
-        dtype = trt.nptype(engine.get_binding_dtype(binding))
+        #REF: https://github.com/NVIDIA/TensorRT/issues/3954#issuecomment-2180401230
+        shape = engine.get_tensor_shape(binding)
+        dtype = trt.nptype(engine.get_tensor_dtype(binding))
         torch_dtype = torch.from_numpy(np.array([]).astype(dtype)).dtype
         if dtype == torch.float or dtype == torch.half:
             tensor = torch.randn(tuple(shape))

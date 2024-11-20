@@ -38,22 +38,29 @@ RUN pip config set global.index-url https://mirrors.cernet.edu.cn/pypi/web/simpl
 RUN pip install --no-cache-dir --default-timeout=1000 torch==1.12 torchvision==0.13 timm==0.5.4 einops \
     onnx==1.12 onnxruntime-gpu==1.12 onnxconverter_common==1.12 \
     attrs cloudpickle decorator psutil synr tornado xgboost==1.5.0 regex pandas pytest \
+    nvidia-pyindex nvidia-tensorrt \
     && pip install "numpy<2" \
     && rm -rf ~/.cache/pip
 
-RUN git clone https://mirror.ghproxy.com/https://github.com/nox-410/tvm --recursive -b welder \
-  && sed -i 's|https://github.com|https://mirror.ghproxy.com/https://github.com|g' tvm/.gitmodules \
+#RUN git config --global url."https://gitclone.com/".insteadOf https://
+
+RUN git clone https://gitee.com/lanyuflying/tvm-distro.git \
+  && mkdir ~/.tvm/ \
+  && mv tvm-distro/tophub ~/.tvm/
+
+RUN git clone https://ghproxy.net/https://github.com/nox-410/tvm --recursive -b welder \
+  && sed -i 's|https://github.com|https://ghproxy.net/https://github.com|g' tvm/.gitmodules \
   && mkdir tvm/build && cd tvm/build && cp ../cmake/config.cmake . \
   && echo "set(USE_LLVM ON)" >> config.cmake && echo "set(USE_CUDA ON)" >> config.cmake \
-  && cmake .. && make -j2
+  && cmake .. && make -j16
 ENV PYTHONPATH /root/tvm/python:$PYTHONPATH
 
-RUN git clone https://mirror.ghproxy.com/https://github.com/nox-410/nnfusion -b welder \
+RUN git clone https://ghproxy.net/https://github.com/nox-410/nnfusion -b welder \
   && mkdir nnfusion/build \
-  && cd nnfusion/build && cmake .. && make -j2
+  && cd nnfusion/build && cmake .. && make -j16
 ENV PATH /root/nnfusion/build/src/tools/nnfusion:$PATH
 
-RUN git clone https://mirror.ghproxy.com/https://github.com/nox-410/cutlass -b welder
+RUN git clone https://ghproxy.net/https://github.com/nox-410/cutlass -b welder
 ENV CPLUS_INCLUDE_PATH /root/cutlass/include:$CPLUS_INCLUDE_PATH
 
 COPY . welder/
