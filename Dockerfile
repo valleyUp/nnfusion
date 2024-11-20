@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/cuda:11.0.3-cudnn8-devel-ubuntu20.04
+FROM ngc.nju.edu.cn/nvidia/cuda:11.0.3-cudnn8-devel-ubuntu20.04
 
 WORKDIR /root
 
@@ -38,6 +38,7 @@ RUN pip config set global.index-url https://mirrors.cernet.edu.cn/pypi/web/simpl
 RUN pip install --no-cache-dir --default-timeout=1000 torch==1.12 torchvision==0.13 timm==0.5.4 einops \
     onnx==1.12 onnxruntime-gpu==1.12 onnxconverter_common==1.12 \
     attrs cloudpickle decorator psutil synr tornado xgboost==1.5.0 regex pandas pytest \
+    && pip install "numpy<2" \
     && rm -rf ~/.cache/pip
 
 RUN git clone https://mirror.ghproxy.com/https://github.com/nox-410/tvm --recursive -b welder \
