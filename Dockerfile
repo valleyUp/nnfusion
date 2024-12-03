@@ -1,4 +1,4 @@
-FROM ngc.nju.edu.cn/nvidia/cuda:11.0.3-cudnn8-devel-ubuntu20.04
+FROM ngc.nju.edu.cn/nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
 
 WORKDIR /root
 
@@ -35,12 +35,15 @@ RUN conda install python~=3.10 pip cmake && conda clean --all
 
 RUN pip config set global.index-url https://mirrors.cernet.edu.cn/pypi/web/simple
 
-RUN pip install --no-cache-dir --default-timeout=1000 torch==1.12 torchvision==0.13 timm==0.5.4 einops \
-    onnx==1.12 onnxruntime-gpu==1.12 onnxconverter_common==1.12 \
-    attrs cloudpickle decorator psutil synr tornado xgboost==1.5.0 regex pandas pytest \
+RUN pip install --no-cache-dir --default-timeout=1000 torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 -f https://mirror.sjtu.edu.cn/pytorch-wheels/cu118
+
+RUN pip install --no-cache-dir --default-timeout=1000 timm einops \
+    onnx onnxruntime-gpu==1.18.1 onnxconverter_common \
+    attrs cloudpickle decorator psutil synr tornado xgboost regex pandas pytest \
     nvidia-pyindex nvidia-tensorrt \
-    && pip install "numpy<2" \
     && rm -rf ~/.cache/pip
+
+RUN pip install "numpy<2"
 
 #RUN git config --global url."https://gitclone.com/".insteadOf https://
 
